@@ -1,5 +1,6 @@
 const stream = require('stream');
 const {dockerLang} = require('./config');
+const {splitCommand} = require('./utils');
 
 let repl;
 
@@ -27,7 +28,7 @@ const input = (scripts, callback) => {
 const executeDocker = (lang, command) => {
    return new Promise((resolve, reject) => {
       repl = dockerLang(lang);
-      input(command, (data) => {
+      input(splitCommand(command), (data) => {
          console.log(data);
          resolve(JSON.stringify(data));
       });
